@@ -1,6 +1,7 @@
 #![deny(clippy::all)]
 #![forbid(unsafe_code)]
 
+use automata::bigmoore::BigMoore;
 use automata::rps::RPS;
 use automata::slime::Slime;
 use automata::HEIGHT;
@@ -36,7 +37,7 @@ fn main() -> Result<(), Error> {
         Pixels::new(WIDTH, HEIGHT, surface_texture)?
     };
 
-    let mut world = Slime::new();
+    let mut world = BigMoore::new();
 
     event_loop.run(move |event, _, control_flow| {
         *control_flow = ControlFlow::WaitUntil(Instant::now() + Duration::from_millis(500));
@@ -68,7 +69,7 @@ fn main() -> Result<(), Error> {
             }
 
             // Update internal state and request a redraw
-            if Instant::now() - world.last_update > Duration::from_millis(5) {
+            if Instant::now() - world.last_update > Duration::from_millis(150) {
                 world.last_update = Instant::now();
                 world.update();
             }
